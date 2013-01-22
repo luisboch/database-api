@@ -1,5 +1,7 @@
 <?php
 
+require_once 'MysqlPreparedStatement.php';
+require_once 'MysqlResultSet.php';
 /**
  * Description of Connection
  *
@@ -12,8 +14,6 @@ class MysqlConnection implements Connection {
      * @var mysqli
      */
     private static $conn = NULL;
-
-    private static $type = 0;
 
     /**
      *
@@ -39,11 +39,11 @@ class MysqlConnection implements Connection {
      * @return ResultSet
      */
     public function query($sql) {
-        $rs = new ResultSet($sql);
+        $rs = new MysqlResultSet($sql);
         $result = $this->db_conn->query($sql);
         if ($result === false) {
-            self::$logger->error("QUERY ERROR [" . $sql . "]");
-            throw new QueryException("ERRO AO PREPARAR QUERY " . $this->db_conn->error);
+            self::$logger->error("Query error [" . $sql . "]");
+            throw new QueryException("Failed to execute query: " . $this->db_conn->error);
         }
 
         self::$logger->debug("GOOD: '" . $sql . "'");
@@ -112,17 +112,10 @@ class MysqlConnection implements Connection {
      * @param type $user
      * @param type $password
      * @param type $port
-     * @return MysqlConnection 
+     * @return Connection 
      */
-    public function createConnection($host, $database, $user, $password, $port = null) {
-
-        if (ENVIRONMENT == 'development') {
-            self::forDevelopment();
-        } else {
-            self::forProduction();
-        }
-
-        $config = new ConfigConnection(self::$type == 1 ? true : false);
+    public static function connect($host, $database, $user, $password, $port = null) {
+        
         $c = new MysqlConnection();
         self::$logger->info("Connecting to host [" . $host . "] database [" . $database . "] ");
         $c->db_conn = new mysqli($host, $user,

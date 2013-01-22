@@ -5,11 +5,6 @@
  * @author luis
  */
 class MysqlPreparedStatement implements PreparedStatement{
-    const STRING = "s";
-    const DOUBLE = "d";
-    const INTEGER = "i";
-    const BLOB = "b";
-    const BOOLEAN = "i";
     /**
      *
      * @var Logger
@@ -75,6 +70,7 @@ class MysqlPreparedStatement implements PreparedStatement{
         }
         
     }
+    
     private function bindParams(){
         
         $parameters = "";
@@ -113,9 +109,10 @@ class MysqlPreparedStatement implements PreparedStatement{
             throw new QueryException("Failed to prepare query: " . $this->statement->error);
         }
         
-        $rs = new ResultSet($this->sql);
+        $rs = new MysqlResultSet($this->sql);
         $rs->setMysqlStmt($this->statement);
         return $rs;
+        
     }
 }
 

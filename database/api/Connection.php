@@ -7,15 +7,6 @@
 interface Connection {
     
     /**
-     * @return Connection
-     */
-
-    /**
-     * @return Connection
-     */
-    public function &createConnection($host, $database, $user, $password,  $port = null);
-
-    /**
      *
      * @param string $string
      * @return ResultSet
@@ -43,7 +34,10 @@ interface Connection {
 
     public function close();
 
-
+    /**
+     * @return Connection
+     */
+    public static function connect($host, $database, $user, $password, $port = null);
 }
 
 ?>

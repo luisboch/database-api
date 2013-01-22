@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author luis
  */
@@ -10,10 +11,6 @@ interface ResultSet
      * @return boolean
      */
     public function next();
-
-    public function addData($data, $pointer=null);
-
-    public function setData($data);
 
     /**
      *
