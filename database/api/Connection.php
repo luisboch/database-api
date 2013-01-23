@@ -11,7 +11,7 @@ interface Connection {
      * @param string $string
      * @return ResultSet
      */
-    public function query($sql);
+    public function query($sql, $class = NULL);
 
     /**
      *

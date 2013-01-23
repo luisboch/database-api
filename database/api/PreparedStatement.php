@@ -20,10 +20,11 @@ interface PreparedStatement {
     public function setParameter($index, $parameter, $type);
 
     /**
-     *
+     * Used when need retrieve a ResultSet
      * @return ResultSet
      */
     public function getResult();
+    
     /**
      *
      * @return void

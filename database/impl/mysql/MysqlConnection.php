@@ -2,8 +2,9 @@
 
 require_once 'MysqlPreparedStatement.php';
 require_once 'MysqlResultSet.php';
+
 /**
- * Description of Connection
+ * Description of MysqlConnection
  *
  * @author luis
  */
@@ -38,7 +39,8 @@ class MysqlConnection implements Connection {
      * @param string $string
      * @return ResultSet
      */
-    public function query($sql) {
+    public function query($sql, $class = NULL) {
+        
         $rs = new MysqlResultSet($sql);
         $result = $this->db_conn->query($sql);
         if ($result === false) {
@@ -49,6 +51,9 @@ class MysqlConnection implements Connection {
         self::$logger->debug("GOOD: '" . $sql . "'");
 
         $rs->setMysqlResult($result);
+        if($class!=null){
+            return BeanUtil::makeObject($rs, $class);
+        }
         return $rs;
     }
 

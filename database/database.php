@@ -6,6 +6,7 @@ require_once 'exceptions/NoResultException.php';
 require_once 'api/Connection.php';
 require_once 'api/PreparedStatement.php';
 require_once 'api/ResultSet.php';
+require_once 'api/BeanUtil.php';
 
 class DatabaseManager{
     

@@ -30,7 +30,7 @@ class PgConnection implements Connection {
      * @throws IllegalStateException
      */
     public function begin() {
-        if($this->conn === null){
+        if ($this->conn === null) {
             throw new IllegalStateException("Not connected");
         }
         pg_query($this->conn, "BEGIN TRANSACTION");
@@ -47,7 +47,7 @@ class PgConnection implements Connection {
      * @throws IllegalStateException
      */
     public function commit() {
-        if($this->conn === null){
+        if ($this->conn === null) {
             throw new IllegalStateException("Not connected");
         }
         pg_query($this->conn, "COMMIT TRANSACTION");
@@ -61,19 +61,19 @@ class PgConnection implements Connection {
      * @throws QueryException
      */
     public function prepare($sql) {
-        if($this->conn === null){
+        if ($this->conn === null) {
             throw new IllegalStateException("Not connected");
         }
         $sucess = pg_prepare($this->conn, "pg_prepared_query", $sql);
-        
-        if($sucess === false){
-            throw new 
-               QueryException("Failed to prepare query: ".pg_last_error($this->conn));
+
+        if ($sucess === false) {
+            throw new
+            QueryException("Failed to prepare query: " . pg_last_error($this->conn));
         }
-        
+
         $prepare = pg_get_result($this->conn);
-        
-        $rs =  new PgPreparedStatement();
+
+        $rs = new PgPreparedStatement();
         $rs->setResource($prepare);
         $rs->setConnection($this->conn);
         return $rs;
@@ -85,17 +85,21 @@ class PgConnection implements Connection {
      * @return ResultSet
      * @throws QueryException
      */
-    public function query($sql) {
+    public function query($sql, $class = NULL) {
         $rs = new PgResultSet();
-        
+
         $query = pg_query($this->conn, $sql);
-        
-        if($query === false){
-            throw new 
-               QueryException("Failed to execute query: ".pg_last_error($this->conn));
+
+        if ($query === false) {
+            throw new
+            QueryException("Failed to execute query: " . pg_last_error($this->conn));
         }
         $rs->setResultSet($query);
-        
+
+        if ($class != null) {
+            return BeanUtil::makeObject($rs, $class);
+        }
+
         return $rs;
     }
 
