@@ -8,7 +8,7 @@ require_once 'PgResultSet.php';
  *
  * @author luis
  */
-class PgConnection implements Connection {
+class PgConnection extends BasicConnection{
 
     private $conn;
     private $autocommit = false;
@@ -76,30 +76,6 @@ class PgConnection implements Connection {
         $rs = new PgPreparedStatement();
         $rs->setResource($prepare);
         $rs->setConnection($this->conn);
-        return $rs;
-    }
-
-    /**
-     * 
-     * @param string $sql
-     * @return ResultSet
-     * @throws QueryException
-     */
-    public function query($sql, $class = NULL) {
-        $rs = new PgResultSet();
-
-        $query = pg_query($this->conn, $sql);
-
-        if ($query === false) {
-            throw new
-            QueryException("Failed to execute query: " . pg_last_error($this->conn));
-        }
-        $rs->setResultSet($query);
-
-        if ($class != null) {
-            return BeanUtil::makeObject($rs, $class);
-        }
-
         return $rs;
     }
 

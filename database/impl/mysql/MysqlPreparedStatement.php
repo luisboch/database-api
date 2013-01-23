@@ -69,6 +69,10 @@ class MysqlPreparedStatement implements PreparedStatement{
             throw new QueryException("Failed to execute query: " . $this->statement->error);
         }
         
+        $rs = new MysqlResultSet($this->sql);
+        $rs->setMysqlStmt($this->statement);
+        return $rs;
+        
     }
     
     private function bindParams(){

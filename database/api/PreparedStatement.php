@@ -27,7 +27,7 @@ interface PreparedStatement {
     
     /**
      *
-     * @return void
+     * @return ResultSet
      */
     public function execute();
     

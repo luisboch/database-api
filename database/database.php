@@ -4,9 +4,9 @@ require_once 'exceptions/DatabaseException.php';
 require_once 'exceptions/IllegalStateException.php';
 require_once 'exceptions/NoResultException.php';
 require_once 'api/Connection.php';
+require_once 'api/BasicConnection.php';
 require_once 'api/PreparedStatement.php';
 require_once 'api/ResultSet.php';
-require_once 'api/BeanUtil.php';
 
 class DatabaseManager{
     

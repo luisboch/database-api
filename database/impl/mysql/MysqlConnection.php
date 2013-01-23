@@ -8,7 +8,7 @@ require_once 'MysqlResultSet.php';
  *
  * @author luis
  */
-class MysqlConnection implements Connection {
+class MysqlConnection extends BasicConnection {
 
     /**
      *
@@ -34,29 +34,6 @@ class MysqlConnection implements Connection {
         }
     }
     
-    /**
-     *
-     * @param string $string
-     * @return ResultSet
-     */
-    public function query($sql, $class = NULL) {
-        
-        $rs = new MysqlResultSet($sql);
-        $result = $this->db_conn->query($sql);
-        if ($result === false) {
-            self::$logger->error("Query error [" . $sql . "]");
-            throw new QueryException("Failed to execute query: " . $this->db_conn->error);
-        }
-
-        self::$logger->debug("GOOD: '" . $sql . "'");
-
-        $rs->setMysqlResult($result);
-        if($class!=null){
-            return BeanUtil::makeObject($rs, $class);
-        }
-        return $rs;
-    }
-
     /**
      *
      * @param string $sql
