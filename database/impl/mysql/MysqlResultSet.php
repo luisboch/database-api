@@ -60,11 +60,12 @@ class MysqlResultSet implements ResultSet {
                 //remove do sql todo o from 
                 $sql = str_replace($remove, '', $sql);
             }
+            
             //monta array baseado na virgula
+            $fields = array();
             if (strpos($sql, ',') === false) { // não tem varios campos no select
                 if ($pos === false) { // não tem from
                     $aux = explode(" ", $sql);
-                    $fields = array();
                     $fields[] = $aux[count($aux) - 1];
                 }
             } else {
