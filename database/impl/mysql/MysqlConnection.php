@@ -12,12 +12,6 @@ class MysqlConnection extends BasicConnection {
 
     /**
      *
-     * @var mysqli
-     */
-    private static $conn = NULL;
-
-    /**
-     *
      * @var Logger
      */
     private static $logger;
@@ -99,7 +93,7 @@ class MysqlConnection extends BasicConnection {
         $c->db_conn = new mysqli($host, $user,
                         $password, $database, $port);
         if ($c->db_conn->connect_errno) {
-            throw new DatabaseException("FALHA NA CONEXÃO COM O BANCO DE DADOS");
+            throw new DatabaseException("Failed to connect on database");
         }
 
         return $c;
