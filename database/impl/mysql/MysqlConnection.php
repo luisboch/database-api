@@ -44,8 +44,8 @@ class MysqlConnection extends BasicConnection {
 
         if ($stmt === false) {
 
-            self::$logger->error("QUERY ERROR [" . $sql . "]");
-            throw new QueryException("ERRO AO PREPARAR QUERY " . $this->db_conn->error);
+            self::$logger->error("Error on query [" . $sql . "]");
+            throw new QueryException("Error while preparing query \n\"" . $this->db_conn->error."\"\n");
         }
 
         self::$logger->debug("GOOD: '" . $sql . "'");
@@ -81,10 +81,6 @@ class MysqlConnection extends BasicConnection {
 
     public function close() {
         $this->db_conn->close();
-    }
-
-    public static function throwException($exption, $message) {
-        throw new $exption($message . self::$conn->error);
     }
 
     /**
