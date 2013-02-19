@@ -1,7 +1,8 @@
 <?php
-include 'logger/log4php/Logger.php';
-Logger::configure('logger/log4php.xml');
-include 'database/database.php';
+
+include 'log4php/Logger.php';
+Logger::configure('log4php.xml');
+include '/database.php';
 define("ENVIRONMENT", 'development');
 $conn = DatabaseManager::getConnection();
 // single query
