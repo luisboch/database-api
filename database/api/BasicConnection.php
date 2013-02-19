@@ -16,7 +16,7 @@ abstract class BasicConnection implements Connection{
         
         $prepare = $this->prepare($sql);
         
-        $result = &$prepare->getResult();
+        $result = $prepare->getResult();
         
         if($class === NULL){
             return $result;
