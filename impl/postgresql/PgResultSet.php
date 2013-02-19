@@ -31,7 +31,10 @@ class PgResultSet implements ResultSet {
     public function fetchAssoc() {
         return pg_fetch_assoc($this->source, $this->pointer);
     }
-
+    /**
+     * 
+     * @return integer
+     */
     public function getNumRows() {
         return $this->numRows;
     }

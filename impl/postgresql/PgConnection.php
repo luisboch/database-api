@@ -64,7 +64,7 @@ class PgConnection extends BasicConnection{
         if ($this->conn === null) {
             throw new IllegalStateException("Not connected");
         }
-        $sucess = pg_prepare($this->conn, "pg_prepared_query", $sql);
+        $sucess = pg_prepare($this->conn, "", $sql);
 
         if ($sucess === false) {
             throw new

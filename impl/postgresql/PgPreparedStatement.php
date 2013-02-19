@@ -16,7 +16,7 @@ class PgPreparedStatement implements PreparedStatement{
      * @throws QueryException
      */
     public function execute() {
-        $source = pg_execute($this->conn, "pg_prepared_query", $this->params);
+        $source = pg_execute($this->conn, "", $this->params);
         if($source === false){
             throw new QueryException("Failed to execute query: ".  pg_last_error($this->conn));
         }
@@ -32,7 +32,7 @@ class PgPreparedStatement implements PreparedStatement{
      * @throws QueryException
      */
     public function getResult() {
-        $source = pg_execute($this->conn, "pg_prepared_query", $this->params);
+        $source = pg_execute($this->conn, "", $this->params);
         if($source === false){
             throw new QueryException("Failed to execute query: ".  pg_last_error($this->conn));
         }
