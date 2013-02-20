@@ -55,7 +55,7 @@ class PgConnection extends BasicConnection{
 
     /**
      * 
-     * @param type $sql
+     * @param string $sql
      * @return PreparedStatement
      * @throws IllegalStateException
      * @throws QueryException
