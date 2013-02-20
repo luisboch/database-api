@@ -9,13 +9,24 @@ class PgPreparedStatement implements PreparedStatement{
     private $types = array();
     private $params = array();
     private $conn;
-
+    /**
+     *
+     * @var Logger
+     */
+    private static $logger;
+    
+    function __construct() {
+       if(self::$logger === null){
+           self::$logger = Logger::getLogger(__CLASS__);
+       }
+    }
 
     /**
      * @return void
      * @throws QueryException
      */
     public function execute() {
+        self::$logger->debug("BIND: [" . implode(', ', $this->params) . "]");
         $source = pg_execute($this->conn, "", $this->params);
         if($source === false){
             throw new QueryException("Failed to execute query: ".  pg_last_error($this->conn));
@@ -32,6 +43,8 @@ class PgPreparedStatement implements PreparedStatement{
      * @throws QueryException
      */
     public function getResult() {
+        
+        self::$logger->debug("BIND: [" . implode(', ', $this->params) . "]");
         $source = pg_execute($this->conn, "", $this->params);
         if($source === false){
             throw new QueryException("Failed to execute query: ".  pg_last_error($this->conn));

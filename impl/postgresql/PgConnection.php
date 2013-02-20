@@ -9,10 +9,15 @@ require_once 'PgResultSet.php';
  * @author luis
  */
 class PgConnection extends BasicConnection{
-
+    
     private $conn;
     private $autocommit = false;
-
+    /**
+     *
+     * @var Logger
+     */
+    private static $logger;
+    
     private function __construct() {
         
     }
@@ -70,7 +75,7 @@ class PgConnection extends BasicConnection{
             throw new
             QueryException("Failed to prepare query: " . pg_last_error($this->conn));
         }
-
+        self::$logger->debug("GOOD: '" . $sql . "'");
         $prepare = pg_get_result($this->conn);
 
         $rs = new PgPreparedStatement();
@@ -103,6 +108,9 @@ class PgConnection extends BasicConnection{
 
         $conn = new PgConnection();
         $conn->conn = &$resource;
+        
+        // Log Support
+        self::$logger = Logger::getLogger(__CLASS__);
         return $conn;
     }
 
