@@ -98,6 +98,14 @@ class MysqlConnection extends BasicConnection {
 
         return $c;
     }
+    /**
+     * 
+     * @return boolean
+     */
+    public function isConnected() {
+        self::$logger->warn("This methos no has tested, verify!");
+        return @$this->db_conn->ping();
+    }
 
 }
 

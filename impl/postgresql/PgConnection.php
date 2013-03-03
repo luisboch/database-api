@@ -9,7 +9,10 @@ require_once 'PgResultSet.php';
  * @author luis
  */
 class PgConnection extends BasicConnection{
-    
+    /**
+     * @var boolean 
+     */
+    private $inTransaction = false;
     private $conn;
     private $autocommit = false;
     /**
@@ -39,9 +42,14 @@ class PgConnection extends BasicConnection{
             throw new IllegalStateException("Not connected");
         }
         pg_query($this->conn, "BEGIN TRANSACTION");
+        $this->inTransaction = true;
     }
 
     public function close() {
+        
+        // rollback all changes
+        $this->rollback();
+        
         if ($this->conn !== null) {
             pg_close($this->conn);
         }
@@ -56,6 +64,7 @@ class PgConnection extends BasicConnection{
             throw new IllegalStateException("Not connected");
         }
         pg_query($this->conn, "COMMIT TRANSACTION");
+        $this->inTransaction = false;
     }
 
     /**
@@ -85,7 +94,10 @@ class PgConnection extends BasicConnection{
     }
 
     public function rollback() {
-        pg_query($this->conn, "ROLLBACK TRANSACTION");
+        if($this->inTransaction){
+            @pg_query($this->conn, "ROLLBACK TRANSACTION");
+            $this->inTransaction = false;
+        }
     }
 
     /**
@@ -112,6 +124,10 @@ class PgConnection extends BasicConnection{
         // Log Support
         self::$logger = Logger::getLogger(__CLASS__);
         return $conn;
+    }
+
+    public function isConnected() {
+        return @pg_ping($this->conn);
     }
 
 }

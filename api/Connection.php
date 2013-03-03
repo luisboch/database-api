@@ -38,6 +38,11 @@ interface Connection {
      * @return Connection
      */
     public static function connect($host, $database, $user, $password, $port = null);
+    
+    /**
+     * @return boolean True if connected, false otherwise
+     */
+    public function isConnected();
 }
 
 ?>
