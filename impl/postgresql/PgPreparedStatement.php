@@ -26,6 +26,8 @@ class PgPreparedStatement implements PreparedStatement{
      * @throws QueryException
      */
     public function execute() {
+        $this->reindexParams();
+        
         self::$logger->debug("BIND: [" . implode(', ', $this->params) . "]");
         $source = pg_execute($this->conn, "", $this->params);
         if($source === false){
@@ -43,6 +45,8 @@ class PgPreparedStatement implements PreparedStatement{
      * @throws QueryException
      */
     public function getResult() {
+        
+        $this->reindexParams();
         
         self::$logger->debug("BIND: [" . implode(', ', $this->params) . "]");
         $source = pg_execute($this->conn, "", $this->params);
@@ -65,6 +69,10 @@ class PgPreparedStatement implements PreparedStatement{
     
     function setConnection($conn) {
         $this->conn = $conn;
+    }
+    
+    public function reindexParams(){
+        ksort($this->params);
     }
 }
 
