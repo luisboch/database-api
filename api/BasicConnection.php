@@ -29,11 +29,16 @@ abstract class BasicConnection implements Connection{
             $arr = $result->fetchArray();
             $instance = $rf->newInstance();
             foreach ($arr as $k => $v) {
+                
+                // Pega apenas as chaves com texto (ignora as chaves numéricas)
                 if (!is_numeric($k)) {
-                    $pr = $rf->getProperty($k);
-                    $propertieName = $pr->getName();
-                    $method = "set" . ucfirst($propertieName);
+                    
+                    $propertyName = $this->getPropertyName($k);
+                    
+                    $method = "set" . ucfirst($propertyName);
+                    
                     $method = $rf->getMethod($method);
+                    
                     $method->invoke($instance, $v);
                 }
             }
@@ -41,6 +46,18 @@ abstract class BasicConnection implements Connection{
             $list[] = $instance;
         }
         return $list;
+    }
+    
+    private function getPropertyName($name) {
+        
+        while($underline = strpos($name, '_') !== FALSE){
+            // pega a primeira letra após o underline
+            $toReplace = substr($name, $underline, 2);
+            $after = strtoupper($toReplace);
+            $name = str_replace($toReplace, $after, $name);
+        }
+        
+        return $name;
     }
 }
 

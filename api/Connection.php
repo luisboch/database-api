@@ -15,7 +15,7 @@ interface Connection {
 
     /**
      *
-     * @param string $sql
+     * @param string $sqlCursoRelatorioResultado
      * @return PreparedStatement
      */
     public function prepare($sql);
