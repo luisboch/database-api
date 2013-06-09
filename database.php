@@ -4,6 +4,7 @@ require_once 'exceptions/QueryException.php';
 require_once 'exceptions/DatabaseException.php';
 require_once 'exceptions/IllegalStateException.php';
 require_once 'exceptions/NoResultException.php';
+require_once 'exceptions/NoUniqueResultException.php';
 require_once 'api/Connection.php';
 require_once 'api/BasicConnection.php';
 require_once 'api/PreparedStatement.php';

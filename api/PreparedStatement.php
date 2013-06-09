@@ -31,6 +31,11 @@ interface PreparedStatement {
      */
     public function execute();
     
+    /**
+     * Retrieve only one Result of query.
+     * @throws NoUniqueResultException when found 0 or more than 1 results
+     */
+    public function getSingleResult();
 }
 
 ?>

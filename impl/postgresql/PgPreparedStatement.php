@@ -74,6 +74,19 @@ class PgPreparedStatement implements PreparedStatement{
     public function reindexParams(){
         ksort($this->params);
     }
+    
+    public function getSingleResult() {
+        $rs = $this->getResult();
+        if($rs->getNumRows() == 1){
+            return $rs;
+        }
+        
+        if($rs->getNumRows() > 1) {
+            throw new NoUniqueResultException("More than one result has been found.");
+        } else if($rs->getNumRows() > 1) {
+            throw new NoUniqueResultException("Anyone result has been found.");
+        }
+    }
 }
 
 ?>

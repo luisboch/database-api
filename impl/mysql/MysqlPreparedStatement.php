@@ -118,6 +118,20 @@ class MysqlPreparedStatement implements PreparedStatement{
         return $rs;
         
     }
+    
+    
+    public function getSingleResult() {
+        $rs = $this->getResult();
+        if($rs->getNumRows() == 1){
+            return $rs;
+        }
+        
+        if($rs->getNumRows() > 1) {
+            throw new NoUniqueResultException("More than one result has been found.");
+        } else if($rs->getNumRows() > 1) {
+            throw new NoUniqueResultException("Anyone result has been found.");
+        }
+    }
 }
 
 ?>
