@@ -4,7 +4,7 @@
  *
  * @author luis
  */
-class MysqlPreparedStatement implements PreparedStatement{
+class MysqlPreparedStatement extends BasicPreparedStatement{
     /**
      *
      * @var Logger

@@ -4,7 +4,7 @@
  *
  * @author luis
  */
-class PgPreparedStatement implements PreparedStatement{
+class PgPreparedStatement extends BasicPreparedStatement{
     private $resource;
     private $types = array();
     private $params = array();
@@ -59,7 +59,7 @@ class PgPreparedStatement implements PreparedStatement{
     }
 
     public function setParameter($index, $parameter, $type) {
-       $this->types[$index] = $index;
+       $this->types[$index] = $type;
        $this->params[$index] = $parameter;
     }
     

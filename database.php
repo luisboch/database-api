@@ -8,6 +8,7 @@ require_once 'exceptions/NoUniqueResultException.php';
 require_once 'api/Connection.php';
 require_once 'api/BasicConnection.php';
 require_once 'api/PreparedStatement.php';
+require_once 'api/BasicPreparedStatement.php';
 require_once 'api/ResultSet.php';
 
 class DatabaseManager {
